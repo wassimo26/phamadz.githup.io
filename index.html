@@ -1,0 +1,38 @@
+<!DOCTYPE html><html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلب المنتجات</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="max-w-md mx-auto bg-white p-6 rounded-xl shadow-md">
+        <h1 class="text-2xl font-bold mb-4">كريم علاج التهاب المفاصل</h1>
+        <p class="mb-2">اختر العرض المفضل واستفد من التخفيضات:</p>
+        <form>
+            <div class="mb-4">
+                <label class="block mb-1">
+                    <input type="radio" name="offer" value="2900" class="mr-2">
+                    اشتري علبتين بـ2900 دج واحصل على الثالثة مجانًا
+                </label>
+                <label class="block mb-1">
+                    <input type="radio" name="offer" value="1900" class="mr-2">
+                    اشتري واحدة بـ1900 دج
+                </label>
+            </div>
+            <div class="mb-4">
+                <input type="text" name="name" placeholder="الاسم" class="w-full p-2 border rounded">
+            </div>
+            <div class="mb-4">
+                <input type="tel" name="phone" placeholder="رقم الهاتف" class="w-full p-2 border rounded">
+            </div>
+            <div class="mb-4">
+                <input type="text" name="city" placeholder="المدينة" class="w-full p-2 border rounded">
+            </div>
+            <button type="submit" class="w-full bg-green-500 text-white p-2 rounded">
+                تأكيد الشراء
+            </button>
+        </form>
+    </div>
+</body>
+</html>
