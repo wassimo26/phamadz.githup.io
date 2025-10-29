@@ -1,38 +1,340 @@
-<!DOCTYPE html><html lang="ar">
+<!doctype html>
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>طلب المنتجات</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title> عيادة الطبيبة قروش نور الهدى للامراض القلبية و الشرايين </title>
+  <meta name="description" content="نظام حجز مواعيد فاخر لطبيبة قلب - تصميم عربي أنيق وملف واحد (HTML/CSS/JS)" />
+  <style>
+    :root{
+      --bg:#0b0f12;
+      --card:#071018;
+      --glass: rgba(255,255,255,0.04);
+      --accent1:#b91c1c; /* crimson */
+      --accent2:#f97316; /* orange */
+      --muted:rgba(255,255,255,0.6);
+      --soft:#111827;
+      --radius:16px;
+      --glass-2: rgba(255,255,255,0.02);
+      color-scheme: dark;
+      font-family: 'Cairo', 'Tajawal', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      background:
+        radial-gradient(800px 300px at 10% 10%, rgba(185,28,28,0.08), transparent 10%),
+        radial-gradient(700px 300px at 90% 90%, rgba(249,115,22,0.05), transparent 15%),
+        var(--bg);
+      color: #eaf2f8;
+      padding:28px; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+
+    .wrap{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:18px}
+
+    header{display:flex;justify-content:space-between;align-items:center;padding:18px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border:1px solid rgba(255,255,255,0.03)}
+    .brand{display:flex;gap:14px;align-items:center}
+    .avatar{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:grid;place-items:center;font-weight:700}
+    header h1{font-size:18px}
+    header p{color:var(--muted);font-size:13px}
+
+    .main{display:grid;grid-template-columns: 1fr 380px;gap:18px}
+    .card{background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.015));padding:18px;border-radius:14px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 10px 30px rgba(2,6,23,0.6)}
+
+    /* hero */
+    .hero{display:flex;gap:14px;align-items:center}
+    .info{flex:1}
+    .info h2{font-size:22px;margin-bottom:6px}
+    .info p{color:var(--muted);font-size:14px}
+
+    .badge{display:inline-block;padding:6px 10px;border-radius:999px;background:linear-gradient(90deg,rgba(255,255,255,0.03),transparent);font-size:13px;border:1px solid rgba(255,255,255,0.02)}
+
+    /* calendar */
+    .calendar{margin-top:14px}
+    .week{display:flex;gap:8px;justify-content:space-between}
+    .day{flex:1;padding:10px;border-radius:10px;text-align:center;cursor:pointer;border:1px solid rgba(255,255,255,0.02)}
+    .day.selected{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;box-shadow:0 8px 24px rgba(185,28,28,0.18)}
+    .day.disabled{opacity:0.35;cursor:not-allowed}
+
+    /* slots */
+    .slots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+    .slot{padding:10px;border-radius:10px;text-align:center;cursor:pointer;border:1px solid rgba(255,255,255,0.03);background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
+    .slot.taken{opacity:0.3;cursor:not-allowed;text-decoration:line-through}
+    .slot.active{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;box-shadow:0 8px 30px rgba(0,0,0,0.6)}
+
+    /* right column */
+    .aside .doctor{display:flex;align-items:center;gap:12px}
+    .doc-meta{color:var(--muted);font-size:13px}
+    .price{font-weight:700;color:var(--accent2)}
+
+    /* form */
+    form{display:grid;gap:10px;margin-top:12px}
+    input,select,textarea{background:transparent;border:1px solid rgba(255,255,255,0.05);padding:10px;border-radius:10px;color:inherit;font-size:14px}
+    .row{display:flex;gap:8px}
+    .row .col{flex:1}
+    .actions{display:flex;gap:8px;align-items:center}
+    .btn{padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);cursor:pointer;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent)}
+    .btn.primary{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;border:none}
+
+    .note{color:var(--muted);font-size:13px}
+
+    /* appointments list */
+    .appt-list{margin-top:12px}
+    .appt{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);margin-bottom:8px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
+
+    footer{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:12px;background:var(--glass-2);font-size:13px;color:var(--muted)}
+
+    /* fancy decorations */
+    .heart-anim{width:60px;height:60px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent1),var(--accent2));box-shadow:0 12px 30px rgba(185,28,28,0.18)}
+    .heart-anim svg{width:34px;height:34px}
+
+    /* responsive */
+    @media (max-width:980px){.main{grid-template-columns:1fr}.slots{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:560px){body{padding:16px}.slots{grid-template-columns:1fr}}
+  </style>
 </head>
-<body class="bg-gray-100 p-6">
-    <div class="max-w-md mx-auto bg-white p-6 rounded-xl shadow-md">
-        <h1 class="text-2xl font-bold mb-4">كريم علاج التهاب المفاصل</h1>
-        <p class="mb-2">اختر العرض المفضل واستفد من التخفيضات:</p>
-        <form>
-            <div class="mb-4">
-                <label class="block mb-1">
-                    <input type="radio" name="offer" value="2900" class="mr-2">
-                    اشتري علبتين بـ2900 دج واحصل على الثالثة مجانًا
-                </label>
-                <label class="block mb-1">
-                    <input type="radio" name="offer" value="1900" class="mr-2">
-                    اشتري واحدة بـ1900 دج
-                </label>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="avatar">د</div>
+        <div>
+          <h1>د. قروش نور الهدى</h1>
+          <p>استشارية قلب والأوعية الدموية — خبرة 5 سنوات</p>
+        </div>
+      </div>
+      <div style="text-align:left">
+        <div class="badge">حجز مواعيد فاخر</div>
+      </div>
+    </header>
+
+    <section class="main">
+      <div class="card">
+        <div class="hero">
+          <div class="info">
+            <h2>احجز موعدك بسهولة وأمان</h2>
+            <p class="note">اختر اليوم ثم الوقت المناسب — تُحفظ المواعيد محليًا ويمكنك طباعتها أو مشاركتها.</p>
+
+            <div class="calendar" id="calendar">
+              <div class="week" id="weekDays"></div>
             </div>
-            <div class="mb-4">
-                <input type="text" name="name" placeholder="الاسم" class="w-full p-2 border rounded">
+
+            <div class="slots" id="slots"></div>
+
+            <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+              <button class="btn" id="prevWeek">الأسبوع السابق</button>
+              <button class="btn" id="nextWeek">الأسبوع التالي</button>
+              <div style="flex:1"></div>
+              <div class="note">المواعيد تتحدّث عند تغيير اليوم</div>
             </div>
-            <div class="mb-4">
-                <input type="tel" name="phone" placeholder="رقم الهاتف" class="w-full p-2 border rounded">
+
+          </div>
+
+          <div class="aside card" style="width:360px">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div class="doctor">
+                <div class="heart-anim" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s-7-4.35-9-7.5C-1 7.5 6 3.5 9 7.5 12 3.5 19 7.5 21 13.5 19 16.65 12 21 12 21z" fill="white" opacity="0.95"/></svg>
+                </div>
+                <div style="margin-right:8px">
+                  <div style="font-weight:700">د.  قروش نور الهدى </div>
+                  <div class="doc-meta">استشارية قلب — مستشفى بالوة تيزي وزو</div>
+                </div>
+              </div>
             </div>
-            <div class="mb-4">
-                <input type="text" name="city" placeholder="المدينة" class="w-full p-2 border rounded">
+
+            <div style="margin-top:12px">
+              <div class="note">رسوم الزيارة:</div>
+              <div class="price"> 4500 DA</div>
             </div>
-            <button type="submit" class="w-full bg-green-500 text-white p-2 rounded">
-                تأكيد الشراء
-            </button>
-        </form>
-    </div>
+
+            <form id="bookForm" autocomplete="off">
+              <input type="hidden" id="selectedDate" />
+              <input type="hidden" id="selectedTime" />
+              <div style="margin-top:10px" class="note">معلومات المريض</div>
+              <input id="pname" placeholder="الاسم الكامل" required />
+              <input id="pphone" placeholder="رقم الهاتف" required />
+              <input id="page" placeholder="العمر (سنة)" inputmode="numeric" />
+              <div style="margin-top:8px">
+                <select id="reason"><option value="فحص" selected>فحص دوري</option><option value="اعراض">أعراض قلبية</option><option value="متابعة">متابعة حالة</option></select>
+              </div>
+
+              <div class="actions" style="margin-top:10px">
+                <button type="button" class="btn" id="printBtn">طباعة الحجز</button>
+                <button type="submit" class="btn primary" id="confirmBtn">تأكيد الحجز</button>
+              </div>
+              <div id="formMsg" class="note" style="margin-top:8px"></div>
+            </form>
+
+            <div class="appt-list" id="apptList">
+              <h4 style="margin-top:12px">مواعيدك المحجوزة</h4>
+              <div id="appts"></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <footer>
+      <div>© 2025 — د. قروش  ن</div>
+      <div class="note">اتصال عاجل:  0782695914</div>
+    </footer>
+  </div>
+
+  <script>
+    // Utilities
+    const qs = s => document.querySelector(s);
+    const weekDaysEl = qs('#weekDays');
+    const slotsEl = qs('#slots');
+    const prevBtn = qs('#prevWeek');
+    const nextBtn = qs('#nextWeek');
+
+    // State
+    let startOfWeek = getStartOfWeek(new Date()); // Sunday-based
+    const SLOT_TEMPLATE = ["09:00","09:30","10:00","10:30","11:00","11:30","14:00","14:30","15:00","15:30","16:00"];
+
+    // Load booked appointments from localStorage
+    const APPTS_KEY = 'cardio_appts_v1';
+    let appts = JSON.parse(localStorage.getItem(APPTS_KEY) || '[]');
+
+    // Helpers
+    function pad(n){return n<10? '0'+n : ''+n}
+    function formatDate(d){ return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
+    function getStartOfWeek(d){ const copy = new Date(d); const day = copy.getDay(); copy.setDate(copy.getDate() - day); copy.setHours(0,0,0,0); return copy; }
+
+    function renderWeek(){
+      weekDaysEl.innerHTML = '';
+      const days = [];
+      for(let i=0;i<7;i++){
+        const dt = new Date(startOfWeek); dt.setDate(startOfWeek.getDate() + i);
+        days.push(dt);
+      }
+      days.forEach(d => {
+        const el = document.createElement('div');
+        el.className = 'day';
+        const today = new Date();
+        if(d.toDateString() === today.toDateString()) el.classList.add('today');
+
+        // disable past days
+        if(d < new Date(new Date().setHours(0,0,0,0))){ el.classList.add('disabled'); }
+
+        el.innerHTML = `<div style="font-weight:700">${d.toLocaleDateString('ar-EG',{weekday:'short'})}</div><div style="margin-top:6px">${pad(d.getDate())}/${pad(d.getMonth()+1)}</div>`;
+        el.addEventListener('click', ()=>{ if(el.classList.contains('disabled')) return; selectDay(d, el); });
+        weekDaysEl.appendChild(el);
+      });
+
+      // auto-select first available day
+      const firstAvailable = days.find(d => d>= new Date(new Date().setHours(0,0,0,0)));
+      if(firstAvailable) selectDay(firstAvailable, weekDaysEl.children[ days.indexOf(firstAvailable) ]);
+    }
+
+    function selectDay(d, el){
+      // deselect others
+      [...weekDaysEl.children].forEach(x => x.classList.remove('selected'));
+      el.classList.add('selected');
+      qs('#selectedDate').value = formatDate(d);
+      renderSlots(d);
+    }
+
+    function renderSlots(day){
+      slotsEl.innerHTML = '';
+      const dayStr = formatDate(day);
+      const taken = appts.filter(a => a.date===dayStr).map(a => a.time);
+
+      SLOT_TEMPLATE.forEach(t => {
+        const s = document.createElement('div');
+        s.className = 'slot';
+        if(taken.includes(t)) s.classList.add('taken');
+        s.textContent = t;
+        s.addEventListener('click', ()=>{
+          if(s.classList.contains('taken')) return;
+          [...slotsEl.children].forEach(x=>x.classList.remove('active'));
+          s.classList.add('active');
+          qs('#selectedTime').value = t;
+        });
+        slotsEl.appendChild(s);
+      });
+    }
+
+    prevBtn.addEventListener('click', ()=>{ startOfWeek.setDate(startOfWeek.getDate()-7); renderWeek(); });
+    nextBtn.addEventListener('click', ()=>{ startOfWeek.setDate(startOfWeek.getDate()+7); renderWeek(); });
+
+    // form handling
+    const form = qs('#bookForm');
+    const formMsg = qs('#formMsg');
+    const apptsDiv = qs('#appts');
+
+    function renderAppts(){
+      apptsDiv.innerHTML = '';
+      if(appts.length===0) { apptsDiv.innerHTML = '<div class="note">لا توجد مواعيد محجوزة</div>'; return; }
+      appts.forEach((a,idx)=>{
+        const el = document.createElement('div'); el.className='appt';
+        el.innerHTML = `<div><div style="font-weight:700">${a.name}</div><div class="note">${a.date} - ${a.time} • ${a.reason}</div></div><div><button class="btn" data-idx="${idx}">إلغاء</button></div>`;
+        apptsDiv.appendChild(el);
+      });
+      // attach cancel handlers
+      [...apptsDiv.querySelectorAll('button')].forEach(b=>b.addEventListener('click', (e)=>{
+        const i = parseInt(b.getAttribute('data-idx'));
+        if(confirm('هل تريد فعلاً إلغاء هذا الحجز؟')){ appts.splice(i,1); saveAppts(); renderAppts(); renderSlots(new Date(qs('#selectedDate').value)); }
+      }));
+    }
+
+    function saveAppts(){ localStorage.setItem(APPTS_KEY, JSON.stringify(appts)); }
+
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const name = qs('#pname').value.trim();
+      const phone = qs('#pphone').value.trim();
+      const age = qs('#page').value.trim();
+      const reason = qs('#reason').value;
+      const date = qs('#selectedDate').value;
+      const time = qs('#selectedTime').value;
+
+      if(!name || !phone || !date || !time){ formMsg.textContent = 'املأ الاسم، الهاتف، اختر تاريخ ووقت.'; return; }
+      // simple phone validation
+      if(!/^\+?\d{6,15}$/.test(phone)) { formMsg.textContent = 'أدخل رقم هاتف صالح (أرقام فقط أو +).'; return; }
+
+      // check taken
+      const conflict = appts.find(a => a.date===date && a.time===time);
+      if(conflict){ formMsg.textContent = 'هذا الموعد محجوز بالفعل — اختر وقتًا آخر.'; return; }
+
+      const newA = { name, phone, age, reason, date, time, created: new Date().toISOString() };
+      appts.push(newA); saveAppts(); renderAppts(); renderSlots(new Date(date));
+      formMsg.textContent = 'تم حجز الموعد بنجاح ✓';
+      formMsg.style.color = '#9be7ff';
+      form.reset();
+
+      // little shareable card popup
+      setTimeout(()=> showCard(newA), 400);
+    });
+
+    function showCard(a){
+      const w = window.open('','_blank','width=420,height=560');
+      const html = `<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>حجز - ${a.name}</title><style>body{font-family:Arial,sans-serif;background:#071018;color:#eaf2f8;padding:20px} .card{background:linear-gradient(135deg,#b91c1c,#f97316);padding:18px;border-radius:12px;color:#041022} .small{color:#041022;opacity:0.9}</style></head><body><div class="card"><h2>حجز موعد</h2><p class="small">الاسم: ${a.name}</p><p class="small">التاريخ: ${a.date}</p><p class="small">الوقت: ${a.time}</p><p class="small">السبب: ${a.reason}</p><p class="small">للاطّلاع اطبع أو احفظ هذه الصفحة.</p></div></body></html>`;
+      w.document.write(html); w.document.close();
+    }
+
+    // print button
+    qs('#printBtn').addEventListener('click', ()=>{
+      const date = qs('#selectedDate').value; const time = qs('#selectedTime').value; const name = qs('#pname').value || '---';
+      if(!date || !time) { alert('اختر تاريخ ووقت ثم اضغط طباعة.'); return; }
+      const w = window.open('','_blank','width=600,height=600');
+      const html = `<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>بطاقة حجز</title><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{font-family:Arial;padding:24px;background:white;color:#041022}.box{border:2px dashed #b91c1c;padding:18px;border-radius:12px}</style></head><body><div class="box"><h2>موعد مع د. سارة القلبي</h2><p>الاسم: ${name}</p><p>التاريخ: ${date}</p><p>الوقت: ${time}</p></div></body></html>`;
+      w.document.write(html); w.document.close();
+      // ملاحظة: لا نستدعي window.print() آليًا هنا لتجنّب فتح نافذة الطباعة تلقائيًا عند تحميل الصفحة.
+    });
+
+    // init
+    renderWeek(); renderAppts();
+
+    // accessibility: keyboard navigation for slots
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'ArrowRight') qs('#nextWeek').click();
+      if(e.key === 'ArrowLeft') qs('#prevWeek').click();
+    });
+  </script>
 </body>
 </html>
